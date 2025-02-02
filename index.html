@@ -1,376 +1,405 @@
-
-<html lang="ja"><head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
       rel="icon"
       href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👛</text></svg>"
     />
     <title>Money</title>
     <style>
-       body {
-    font-family: monospace;
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #f8e1e1; /* 薄いピンク色 */
-}
+      body {
+        font-family: monospace;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f8e1e1; /* 薄いピンク色 */
+      }
 
-.balance-card {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
-    font-size: 24px;
-    font-weight: bold;
-    color: #2c3e50;
-    text-align: center;
-    background-color: #ffeef2; /* 梅の花のピンク色 */
-}
+      .balance-card {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+        font-size: 24px;
+        font-weight: bold;
+        color: #2c3e50;
+        text-align: center;
+        background-color: #ffeef2; /* 梅の花のピンク色 */
+      }
 
-table {
-    width: 100%;
-    border-collapse: collapse;
-    background-color: white;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    overflow: hidden;
-}
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        background-color: white;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        overflow: hidden;
+      }
 
-th, td {
-    padding: 12px;
-    text-align: left;
-    border-bottom: 1px solid #f2d7d9; /* 薄いピンクのボーダー */
-}
+      th,
+      td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid #f2d7d9; /* 薄いピンクのボーダー */
+      }
 
-th {
-    background-color: #e91e63; /* 梅の花色のピンク */
-    color: white;
-}
+      th {
+        background-color: #e91e63; /* 梅の花色のピンク */
+        color: white;
+      }
 
-.amount-positive {
-    color: #27ae60; /* 梅の花に合う優しい緑色 */
-}
+      .amount-positive {
+        color: #27ae60; /* 梅の花に合う優しい緑色 */
+      }
 
-.amount-negative {
-    color: #c0392b; /* 赤系を残して、少し濃いピンク色 */
-}
+      .amount-negative {
+        color: #c0392b; /* 赤系を残して、少し濃いピンク色 */
+      }
 
-.input-row td {
-    padding: 8px;
-    background-color: #ffeef2; /* 背景色を梅の花に */
-}
+      .input-row td {
+        padding: 8px;
+        background-color: #ffeef2; /* 背景色を梅の花に */
+      }
 
-.input-row input {
-    width: 90%;
-    padding: 8px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    box-sizing: border-box;
-}
+      .input-row input {
+        width: 90%;
+        padding: 8px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        box-sizing: border-box;
+      }
 
-.input-row button {
-    background-color: #e91e63; /* 梅の花色に近いピンク */
-    color: white;
-    padding: 8px 16px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    width: 100%;
-}
+      .input-row button {
+        background-color: #e91e63; /* 梅の花色に近いピンク */
+        color: white;
+        padding: 8px 16px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        width: 100%;
+      }
 
-.input-row button:hover {
-    background-color: #d81b60; /* 濃いピンクに変化 */
-}
+      .input-row button:hover {
+        background-color: #d81b60; /* 濃いピンクに変化 */
+      }
 
-.editable {
-    cursor: pointer;
-}
+      .editable {
+        cursor: pointer;
+      }
 
-.editable:hover {
-    background-color: #ffeef2; /* 明るいピンクに */
-}
+      .editable:hover {
+        background-color: #ffeef2; /* 明るいピンクに */
+      }
 
-.editing input {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #e91e63; /* ピンクのボーダー */
-    border-radius: 4px;
-    box-sizing: border-box;
-}
+      .editing input {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #e91e63; /* ピンクのボーダー */
+        border-radius: 4px;
+        box-sizing: border-box;
+      }
 
-tr.deletable:hover {
-    background-color: #ffd1dc; /* 梅の花を意識した薄いピンク */
-}
-
+      tr.deletable:hover {
+        background-color: #ffd1dc; /* 梅の花を意識した薄いピンク */
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="balance-card" id="currentBalance">￥38,740</div>
 
     <table>
-        <thead>
-            <tr>
-                <th>日付</th>
-                <th>金額</th>
-                <th>名目</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody id="transactionTable"><tr class="deletable"><td class="editable">2025-02-02</td><td class="amount-positive editable">￥35,680</td><td class="editable">残高調整</td><td></td></tr><tr class="deletable"><td class="editable">2025-02-02</td><td class="amount-positive editable">￥6,000</td><td class="editable">残高調整</td><td></td></tr><tr class="deletable"><td class="editable">2025-02-02</td><td class="amount-negative editable">-￥1,180</td><td class="editable">残高調整</td><td></td></tr><tr class="deletable"><td class="editable">2025-02-01</td><td class="amount-negative editable">-￥460</td><td class="editable">散髪</td><td></td></tr><tr class="deletable"><td class="editable">2025-02-01</td><td class="amount-negative editable">-￥950</td><td class="editable">ラーメン半チャーハン</td><td></td></tr><tr class="deletable"><td class="editable">2025-02-01</td><td class="amount-negative editable">-￥350</td><td class="editable">コーラフロート</td><td></td></tr></tbody>
-        <tbody>
-            <tr class="input-row">
-                <td><input type="date" id="date" required=""></td>
-                <td><input type="text" id="amount" placeholder="金額" required=""></td>
-                <td><input type="text" id="description" placeholder="名目" required=""></td>
-                <td><button onclick="addTransaction()">追加</button></td>
-            </tr>
-        </tbody>
+      <thead>
+        <tr>
+          <th>日付</th>
+          <th>金額</th>
+          <th>名目</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="transactionTable">
+        <tr class="deletable">
+          <td class="editable">2025-02-02</td>
+          <td class="amount-positive editable">￥35,680</td>
+          <td class="editable">残高調整</td>
+          <td></td>
+        </tr>
+        <tr class="deletable">
+          <td class="editable">2025-02-02</td>
+          <td class="amount-positive editable">￥6,000</td>
+          <td class="editable">残高調整</td>
+          <td></td>
+        </tr>
+        <tr class="deletable">
+          <td class="editable">2025-02-02</td>
+          <td class="amount-negative editable">-￥1,180</td>
+          <td class="editable">残高調整</td>
+          <td></td>
+        </tr>
+        <tr class="deletable">
+          <td class="editable">2025-02-01</td>
+          <td class="amount-negative editable">-￥460</td>
+          <td class="editable">散髪</td>
+          <td></td>
+        </tr>
+        <tr class="deletable">
+          <td class="editable">2025-02-01</td>
+          <td class="amount-negative editable">-￥950</td>
+          <td class="editable">ラーメン半チャーハン</td>
+          <td></td>
+        </tr>
+        <tr class="deletable">
+          <td class="editable">2025-02-01</td>
+          <td class="amount-negative editable">-￥350</td>
+          <td class="editable">コーラフロート</td>
+          <td></td>
+        </tr>
+      </tbody>
+      <tbody>
+        <tr class="input-row">
+          <td><input type="date" id="date" required="" /></td>
+          <td>
+            <input type="text" id="amount" placeholder="金額" required="" />
+          </td>
+          <td>
+            <input
+              type="text"
+              id="description"
+              placeholder="名目"
+              required=""
+            />
+          </td>
+          <td><button onclick="addTransaction()">追加</button></td>
+        </tr>
+      </tbody>
     </table>
 
     <script>
-        let transactions = [
-    {
-        "date": "2025-02-01",
-        "amount": -460,
-        "description": "散髪"
-    },
-    {
-        "date": "2025-02-01",
-        "amount": -950,
-        "description": "ラーメン半チャーハン"
-    },
-    {
-        "date": "2025-02-01",
-        "amount": -350,
-        "description": "コーラフロート"
-    },
-    {
-        "date": "2025-02-02",
-        "amount": 35680,
-        "description": "残高調整"
-    },
-    {
-        "date": "2025-02-02",
-        "amount": 6000,
-        "description": "残高調整"
-    }
-];
+      let transactions = [
+        {
+          date: "2025-02-01",
+          amount: -460,
+          description: "散髪",
+        },
+        {
+          date: "2025-02-01",
+          amount: -950,
+          description: "ラーメン半チャーハン",
+        },
+        {
+          date: "2025-02-01",
+          amount: -350,
+          description: "コーラフロート",
+        },
+        {
+          date: "2025-02-02",
+          amount: 35680,
+          description: "残高調整",
+        },
+        {
+          date: "2025-02-02",
+          amount: 6000,
+          description: "残高調整",
+        },
+      ];
 
-        function getTodayDate() {
-            const today = new Date();
-            return today.toISOString().split('T')[0];
+      function getTodayDate() {
+        const today = new Date();
+        return today.toISOString().split("T")[0];
+      }
+
+      function setTodayDate() {
+        document.getElementById("date").value = getTodayDate();
+      }
+
+      function formatCurrency(amount) {
+        return new Intl.NumberFormat("ja-JP", {
+          style: "currency",
+          currency: "JPY",
+        }).format(amount);
+      }
+
+      function parseAmount(amountStr) {
+        // 数値以外の文字を除去
+        const numStr = amountStr.replace(/[,¥]/g, "");
+        // +で始まる場合は収入として扱う
+        if (numStr.startsWith("+")) {
+          return Math.abs(Number(numStr));
+        }
+        // それ以外は支出として扱う
+        return -Math.abs(Number(numStr));
+      }
+
+      function saveFile() {
+        const htmlContent = document.documentElement.outerHTML;
+
+        const replaceStr = `let transactions = ${JSON.stringify(
+          transactions,
+          null,
+          4
+        )};`;
+        const newContent = htmlContent.replace(searchStr, replaceStr);
+
+        const blob = new Blob([newContent], { type: "text/html" });
+        const a = document.createElement("a");
+        a.href = URL.createObjectURL(blob);
+        a.download = "money.html";
+        a.click();
+        URL.revokeObjectURL(a.href);
+      }
+
+      function startEditing(cell, index, field) {
+        const transaction = transactions[index];
+        const currentValue =
+          field === "amount"
+            ? Math.abs(transaction[field]).toString()
+            : transaction[field];
+
+        cell.classList.add("editing");
+        const input = document.createElement("input");
+        input.value = currentValue;
+
+        if (field === "date") {
+          input.type = "date";
+        } else if (field === "amount") {
+          input.type = "text";
+          input.placeholder = "金額";
+        } else {
+          input.type = "text";
+          input.placeholder = "名目";
         }
 
-        function setTodayDate() {
-            document.getElementById('date').value = getTodayDate();
-        }
+        const originalContent = cell.innerHTML;
+        cell.innerHTML = "";
+        cell.appendChild(input);
+        input.focus();
 
-        function formatCurrency(amount) {
-            return new Intl.NumberFormat('ja-JP', {
-                style: 'currency',
-                currency: 'JPY'
-            }).format(amount);
-        }
-
-        function parseAmount(amountStr) {
-            // 数値以外の文字を除去
-            const numStr = amountStr.replace(/[,¥]/g, '');
-            // +で始まる場合は収入として扱う
-            if (numStr.startsWith('+')) {
-                return Math.abs(Number(numStr));
-            }
-            // それ以外は支出として扱う
-            return -Math.abs(Number(numStr));
-        }
-
-        function saveFile() {
-            const htmlContent = document.documentElement.outerHTML;
-            const searchStr = 'let transactions = [
-    {
-        "date": "2025-02-01",
-        "amount": -460,
-        "description": "散髪"
-    },
-    {
-        "date": "2025-02-01",
-        "amount": -950,
-        "description": "ラーメン半チャーハン"
-    },
-    {
-        "date": "2025-02-01",
-        "amount": -350,
-        "description": "コーラフロート"
-    },
-    {
-        "date": "2025-02-02",
-        "amount": 35680,
-        "description": "残高調整"
-    },
-    {
-        "date": "2025-02-02",
-        "amount": 6000,
-        "description": "残高調整"
-    },
-    {
-        "date": "2025-02-02",
-        "amount": -1180,
-        "description": "残高調整"
-    }
-];';
-            const replaceStr = `let transactions = ${JSON.stringify(transactions, null, 4)};`;
-            const newContent = htmlContent.replace(searchStr, replaceStr);
-            
-            const blob = new Blob([newContent], { type: 'text/html' });
-            const a = document.createElement('a');
-            a.href = URL.createObjectURL(blob);
-            a.download = 'money.html';
-            a.click();
-            URL.revokeObjectURL(a.href);
-        }
-
-        function startEditing(cell, index, field) {
-            const transaction = transactions[index];
-            const currentValue = field === 'amount' 
-                ? Math.abs(transaction[field]).toString()
-                : transaction[field];
-            
-            cell.classList.add('editing');
-            const input = document.createElement('input');
-            input.value = currentValue;
-            
-            if (field === 'date') {
-                input.type = 'date';
-            } else if (field === 'amount') {
-                input.type = 'text';
-                input.placeholder = '金額';
+        function finishEditing() {
+          const newValue = input.value.trim();
+          if (newValue) {
+            if (field === "amount") {
+              transactions[index][field] = parseAmount(newValue);
             } else {
-                input.type = 'text';
-                input.placeholder = '名目';
+              transactions[index][field] = newValue;
             }
-
-            const originalContent = cell.innerHTML;
-            cell.innerHTML = '';
-            cell.appendChild(input);
-            input.focus();
-
-            function finishEditing() {
-                const newValue = input.value.trim();
-                if (newValue) {
-                    if (field === 'amount') {
-                        transactions[index][field] = parseAmount(newValue);
-                    } else {
-                        transactions[index][field] = newValue;
-                    }
-                    updateTable();
-                } else {
-                    cell.innerHTML = originalContent;
-                }
-                cell.classList.remove('editing');
-            }
-
-            input.addEventListener('blur', finishEditing);
-            input.addEventListener('keypress', e => {
-                if (e.key === 'Enter') {
-                    finishEditing();
-                }
-            });
+            updateTable();
+          } else {
+            cell.innerHTML = originalContent;
+          }
+          cell.classList.remove("editing");
         }
 
-        function updateTable() {
-            const tbody = document.getElementById('transactionTable');
-            tbody.innerHTML = '';
-            
-            const sortedTransactions = [...transactions].sort((a, b) => 
-                new Date(b.date) - new Date(a.date)
-            );
+        input.addEventListener("blur", finishEditing);
+        input.addEventListener("keypress", (e) => {
+          if (e.key === "Enter") {
+            finishEditing();
+          }
+        });
+      }
 
-            sortedTransactions.forEach((transaction, index) => {
-                const row = tbody.insertRow();
-                row.classList.add('deletable');
-                
-                const dateCell = row.insertCell();
-                dateCell.textContent = transaction.date;
-                dateCell.classList.add('editable');
-                dateCell.addEventListener('dblclick', () => startEditing(dateCell, index, 'date'));
-                
-                const amountCell = row.insertCell();
-                amountCell.textContent = formatCurrency(transaction.amount);
-                amountCell.className = transaction.amount >= 0 ? 'amount-positive editable' : 'amount-negative editable';
-                amountCell.addEventListener('dblclick', () => startEditing(amountCell, index, 'amount'));
-                
-                const descCell = row.insertCell();
-                descCell.textContent = transaction.description;
-                descCell.classList.add('editable');
-                descCell.addEventListener('dblclick', () => startEditing(descCell, index, 'description'));
+      function updateTable() {
+        const tbody = document.getElementById("transactionTable");
+        tbody.innerHTML = "";
 
-                row.insertCell();
+        const sortedTransactions = [...transactions].sort(
+          (a, b) => new Date(b.date) - new Date(a.date)
+        );
 
-                // トリプルクリックで削除
-                let clickCount = 0;
-                let clickTimer = null;
-                row.addEventListener('click', () => {
-                    clickCount++;
-                    if (clickCount === 1) {
-                        clickTimer = setTimeout(() => {
-                            clickCount = 0;
-                        }, 400);
-                    } else if (clickCount === 3) {
-                        clearTimeout(clickTimer);
-                        clickCount = 0;
-                        if (confirm(`「${transaction.description}」を削除しますか？`)) {
-                            transactions.splice(index, 1);
-                            updateTable();
-                        }
-                    }
-                });
-            });
+        sortedTransactions.forEach((transaction, index) => {
+          const row = tbody.insertRow();
+          row.classList.add("deletable");
 
-            const balance = transactions.reduce((sum, t) => sum + t.amount, 0);
-            document.getElementById('currentBalance').textContent = formatCurrency(balance);
-        }
+          const dateCell = row.insertCell();
+          dateCell.textContent = transaction.date;
+          dateCell.classList.add("editable");
+          dateCell.addEventListener("dblclick", () =>
+            startEditing(dateCell, index, "date")
+          );
 
-        function addTransaction() {
-            const dateInput = document.getElementById('date');
-            const amountInput = document.getElementById('amount');
-            const descriptionInput = document.getElementById('description');
+          const amountCell = row.insertCell();
+          amountCell.textContent = formatCurrency(transaction.amount);
+          amountCell.className =
+            transaction.amount >= 0
+              ? "amount-positive editable"
+              : "amount-negative editable";
+          amountCell.addEventListener("dblclick", () =>
+            startEditing(amountCell, index, "amount")
+          );
 
-            if (dateInput.value && amountInput.value && descriptionInput.value) {
-                const newTransaction = {
-                    date: dateInput.value,
-                    amount: parseAmount(amountInput.value),
-                    description: descriptionInput.value
-                };
+          const descCell = row.insertCell();
+          descCell.textContent = transaction.description;
+          descCell.classList.add("editable");
+          descCell.addEventListener("dblclick", () =>
+            startEditing(descCell, index, "description")
+          );
 
-                transactions.push(newTransaction);
+          row.insertCell();
+
+          // トリプルクリックで削除
+          let clickCount = 0;
+          let clickTimer = null;
+          row.addEventListener("click", () => {
+            clickCount++;
+            if (clickCount === 1) {
+              clickTimer = setTimeout(() => {
+                clickCount = 0;
+              }, 400);
+            } else if (clickCount === 3) {
+              clearTimeout(clickTimer);
+              clickCount = 0;
+              if (confirm(`「${transaction.description}」を削除しますか？`)) {
+                transactions.splice(index, 1);
                 updateTable();
-
-                amountInput.value = '';
-                descriptionInput.value = '';
-                setTodayDate();
-                amountInput.focus();
+              }
             }
+          });
+        });
+
+        const balance = transactions.reduce((sum, t) => sum + t.amount, 0);
+        document.getElementById("currentBalance").textContent =
+          formatCurrency(balance);
+      }
+
+      function addTransaction() {
+        const dateInput = document.getElementById("date");
+        const amountInput = document.getElementById("amount");
+        const descriptionInput = document.getElementById("description");
+
+        if (dateInput.value && amountInput.value && descriptionInput.value) {
+          const newTransaction = {
+            date: dateInput.value,
+            amount: parseAmount(amountInput.value),
+            description: descriptionInput.value,
+          };
+
+          transactions.push(newTransaction);
+          updateTable();
+
+          amountInput.value = "";
+          descriptionInput.value = "";
+          setTodayDate();
+          amountInput.focus();
         }
+      }
 
-        document.querySelectorAll('.input-row input').forEach(input => {
-            input.addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    addTransaction();
-                }
-            });
+      document.querySelectorAll(".input-row input").forEach((input) => {
+        input.addEventListener("keypress", function (e) {
+          if (e.key === "Enter") {
+            addTransaction();
+          }
         });
+      });
 
-        document.addEventListener('keydown', function(e) {
-            if (e.altKey && e.key === 's') {
-                e.preventDefault();
-                saveFile();
-            }
-        });
+      document.addEventListener("keydown", function (e) {
+        if (e.altKey && e.key === "s") {
+          e.preventDefault();
+          saveFile();
+        }
+      });
 
-        updateTable();
-        setTodayDate();
+      updateTable();
+      setTodayDate();
     </script>
-
-
-</body></html>
+  </body>
+</html>
