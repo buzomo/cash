@@ -224,6 +224,10 @@
             .catch((err) => {
               showToast("コピーに失敗しました: " + err);
             });
+          setTimeout(() => {
+            location.href =
+              "https://github.com/buzomo/toh-cash/edit/main/index.html";
+          }, 3000);
         }
       });
 
