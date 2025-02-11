@@ -37,11 +37,13 @@
       <div class="modal-content">
         <span class="close" onclick="closeModal()">&times;</span>
         <h2>取引の編集</h2>
-        <input type="date" id="editDate" required />
-        <input type="text" id="editAmount" placeholder="金額" required />
-        <input type="text" id="editDescription" placeholder="名目" required />
-        <button class="update-button" onclick="updateTransaction()">更新</button>
-        <button class="delete-button" onclick="deleteTransaction()">削除</button>
+        <div class="input-area">
+          <input type="date" id="editDate" required />
+          <input type="text" id="editAmount" placeholder="金額" required />
+          <input type="text" id="editDescription" placeholder="名目" required />
+          <button class="update-button" onclick="updateTransaction()">更新</button>
+          <button class="delete-button" onclick="deleteTransaction()">削除</button>
+        </div>
       </div>
     </div>
 
@@ -489,33 +491,31 @@
     }
 
     .update-button {
-      background-color: #4CAF50;
+      background-color: #4CAF50 !important; /* 緑色 */
       color: white;
-      padding: 10px 20px;
+      padding: 8px;
       border: none;
       border-radius: 4px;
       cursor: pointer;
-      margin-top: 10px;
       width: 100%;
     }
 
     .update-button:hover {
-      background-color: #45a049;
+      background-color: #45a049 !important; /* 濃い緑色 */
     }
 
     .delete-button {
-      background-color: #f44336;
+      background-color: #f44336 !important; /* 赤色 */
       color: white;
-      padding: 10px 20px;
+      padding: 8px;
       border: none;
       border-radius: 4px;
       cursor: pointer;
-      margin-top: 10px;
       width: 100%;
     }
 
     .delete-button:hover {
-      background-color: #e53935;
+      background-color: #e53935 !important; /* 濃い赤色 */
     }
   </style>
 </html>
