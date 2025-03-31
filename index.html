@@ -388,7 +388,7 @@
         const description = document.getElementById("editDescription").value;
 
         if (date && !isNaN(parseFloat(amount)) && description) {
-          if (!amount.startsWith('+')) {
+          if (!amount.startsWith('-')) {
             amount = -Math.abs(parseFloat(amount));
           } else {
             amount = parseFloat(amount);
