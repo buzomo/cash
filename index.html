@@ -66,7 +66,16 @@
         <h2>新規取引の追加</h2>
         <div class="input-area">
           <input type="date" id="date" required />
-          <input type="number" id="amount" placeholder="金額" required />
+          <div class="amount-input-container">
+            <input type="number" id="amount" placeholder="金額" required />
+            <div class="toggle-container">
+              <label class="toggle">
+                <input type="checkbox" id="transactionType">
+                <span class="toggle-switch"></span>
+                <span class="toggle-label" id="transactionTypeLabel">支出</span>
+              </label>
+            </div>
+          </div>
           <input type="text" id="description" placeholder="名目" required />
           <button class="add-button" id="submitAdd">追加</button>
         </div>
@@ -80,7 +89,16 @@
         <h2>取引の編集</h2>
         <div class="input-area">
           <input type="date" id="editDate" required />
-          <input type="text" id="editAmount" placeholder="金額" required />
+          <div class="amount-input-container">
+            <input type="number" id="editAmount" placeholder="金額" required />
+            <div class="toggle-container">
+              <label class="toggle">
+                <input type="checkbox" id="editTransactionType">
+                <span class="toggle-switch"></span>
+                <span class="toggle-label" id="editTransactionTypeLabel">支出</span>
+              </label>
+            </div>
+          </div>
           <input type="text" id="editDescription" placeholder="名目" required />
           <button class="update-button" id="submitUpdate">更新</button>
           <button class="delete-button" id="submitDelete">削除</button>
@@ -95,6 +113,8 @@
       let transactions = [];
       let currentRequest = null;
       let retryCount = 0;
+      let isIncome = false;
+      let isEditIncome = false;
       const maxRetries = 3;
       let currentEditIndex = null;
       let myChart = null;
@@ -133,6 +153,17 @@
         
         // 検索ボックスのイベントリスナー
         document.getElementById('searchInput').addEventListener('input', filterTransactions);
+        
+        // トグルスイッチのイベントリスナー
+        document.getElementById('transactionType').addEventListener('change', function() {
+          isIncome = this.checked;
+          document.getElementById('transactionTypeLabel').textContent = isIncome ? '収入' : '支出';
+        });
+        
+        document.getElementById('editTransactionType').addEventListener('change', function() {
+          isEditIncome = this.checked;
+          document.getElementById('editTransactionTypeLabel').textContent = isEditIncome ? '収入' : '支出';
+        });
         
         // 初期日付設定
         document.getElementById("date").value = new Date().toISOString().split("T")[0];
@@ -340,6 +371,9 @@
         document.getElementById("date").value = new Date().toISOString().split("T")[0];
         document.getElementById("amount").value = "";
         document.getElementById("description").value = "";
+        document.getElementById("transactionType").checked = false;
+        isIncome = false;
+        document.getElementById("transactionTypeLabel").textContent = "支出";
         document.getElementById("addModal").style.display = "block";
       }
 
@@ -348,23 +382,27 @@
         currentEditIndex = index;
         const transaction = transactions[index];
         document.getElementById("editDate").value = transaction.date;
-        document.getElementById("editAmount").value = transaction.amount;
+        document.getElementById("editAmount").value = Math.abs(transaction.amount);
         document.getElementById("editDescription").value = transaction.description;
+        
+        // 収入/支出の設定
+        isEditIncome = transaction.amount >= 0;
+        document.getElementById("editTransactionType").checked = isEditIncome;
+        document.getElementById("editTransactionTypeLabel").textContent = isEditIncome ? "収入" : "支出";
+        
         document.getElementById("editModal").style.display = "block";
       }
 
       // トランザクション追加
       function addTransaction() {
         const date = document.getElementById("date").value;
-        let amount = document.getElementById("amount").value.replace(/[,¥]/g, "");
+        let amount = Math.abs(parseFloat(document.getElementById("amount").value.replace(/[,¥]/g, "")) || 0);
         const description = document.getElementById("description").value;
 
-        if (date && !isNaN(parseFloat(amount)) && description) {
-          if (!amount.startsWith('-')) {
-            amount = -Math.abs(parseFloat(amount));
-          } else {
-            amount = parseFloat(amount);
-          }
+        if (date && amount > 0 && description) {
+          // 収入/支出に基づいて金額を調整
+          amount = isIncome ? amount : -amount;
+          
           transactions.push({ date, amount, description });
           updateTable();
           document.getElementById("addModal").style.display = "none";
@@ -384,15 +422,13 @@
       // トランザクション更新
       function updateTransaction() {
         const date = document.getElementById("editDate").value;
-        let amount = document.getElementById("editAmount").value.replace(/[,¥]/g, "");
+        let amount = Math.abs(parseFloat(document.getElementById("editAmount").value.replace(/[,¥]/g, "")) || 0);
         const description = document.getElementById("editDescription").value;
 
-        if (date && !isNaN(parseFloat(amount)) && description) {
-          if (!amount.startsWith('-')) {
-            amount = -Math.abs(parseFloat(amount));
-          } else {
-            amount = parseFloat(amount);
-          }
+        if (date && amount > 0 && description) {
+          // 収入/支出に基づいて金額を調整
+          amount = isEditIncome ? amount : -amount;
+          
           transactions[currentEditIndex] = { date, amount, description };
           updateTable();
           document.getElementById("editModal").style.display = "none";
@@ -752,6 +788,78 @@
       border: 1px solid #ddd;
       border-radius: 5px;
       font-size: 1rem;
+    }
+
+    .amount-input-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .amount-input-container input[type="number"] {
+      flex: 1;
+    }
+
+    .toggle-container {
+      display: flex;
+      align-items: center;
+    }
+
+    /* トグルスイッチ */
+    .toggle {
+      position: relative;
+      display: inline-block;
+      width: 120px;
+      height: 34px;
+      cursor: pointer;
+    }
+
+    .toggle input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .toggle-switch {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #c0392b;
+      transition: .4s;
+      border-radius: 34px;
+    }
+
+    .toggle-switch:before {
+      position: absolute;
+      content: "";
+      height: 26px;
+      width: 26px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      transition: .4s;
+      border-radius: 50%;
+    }
+
+    .toggle input:checked + .toggle-switch {
+      background-color: #27ae60;
+    }
+
+    .toggle input:checked + .toggle-switch:before {
+      transform: translateX(86px);
+    }
+
+    .toggle-label {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: white;
+      font-size: 14px;
+      font-weight: bold;
+      text-transform: uppercase;
     }
 
     .input-area button {
