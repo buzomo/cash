@@ -563,33 +563,6 @@
                 });
         }
 
-        // ショートカットキー
-        document.addEventListener("keydown", function (e) {
-            if (e.altKey && e.key === "s") {
-                e.preventDefault();
-
-                const transactionsData = `let transactions = ${JSON.stringify(
-                    transactions,
-                    null,
-                    4
-                )};`;
-
-                navigator.clipboard
-                    .writeText(transactionsData)
-                    .then(() => {
-                        showToast(
-                            "最新の transactions データをクリップボードにコピーしました！"
-                        );
-                    })
-                    .catch((err) => {
-                        showToast("コピーに失敗しました: " + err);
-                    });
-                setTimeout(() => {
-                    location.href =
-                        "https://github.com/buzomo/toh-cash/edit/main/index.html";
-                }, 3000);
-            }
-        });
     </script>
 </body>
 <style>
