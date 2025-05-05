@@ -279,12 +279,12 @@
         function updateChart() {
             const ctx = document.getElementById('expenseChart').getContext('2d');
 
-            // 直近11週間の週始め日付を取得
+            // 直近13週間の週始め日付を取得
             const weekStarts = [];
             const today = new Date();
             const currentWeekStart = getStartOfWeek(today);
 
-            for (let i = 10; i >= 0; i--) { // 11週間分に変更
+            for (let i = 14; i >= 0; i--) { // 13週間分に変更
                 const weekStart = new Date(currentWeekStart);
                 weekStart.setDate(currentWeekStart.getDate() - (i * 7));
                 weekStarts.push(weekStart);
