@@ -9,6 +9,11 @@
 </head>
 
 <body>
+    <div id="token-overlay" style="display: none;">
+        <input type="password" id="token-input" placeholder="GitHub Token を入力してください" />
+        <button onclick="submitToken()">保存してリロード</button>
+    </div>
+
     <div class="container">
         <div class="header">
             <h1>財布の現金</h1>
@@ -110,6 +115,19 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
     <script>
+        if (!localStorage.getItem('gh_token')) {
+            document.getElementById('token-overlay').style.display = 'flex';
+            document.body.style.overflow = 'hidden';  // スクロール防止
+        }
+
+        function submitToken() {
+            const token = document.getElementById('token-input').value.trim();
+            if (token) {
+                localStorage.setItem('gh_token', token);
+                location.reload();
+            }
+        }
+
         let transactions = [];
         let currentRequest = null;
         let retryCount = 0;
@@ -566,6 +584,40 @@
     </script>
 </body>
 <style>
+    #token-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(250, 250, 255, 0.95);
+        z-index: 9999;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #token-overlay input {
+        padding: 0.5rem;
+        font-size: 1rem;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        width: 300px;
+        max-width: 80%;
+        margin-bottom: 1rem;
+    }
+
+    #token-overlay button {
+        padding: 0.5rem 1rem;
+        background: var(--primary);
+        color: white;
+        border: none;
+        border-radius: 6px;
+        font-size: 1rem;
+        cursor: pointer;
+    }
+
     * {
         box-sizing: border-box;
         margin: 0;
