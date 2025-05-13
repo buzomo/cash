@@ -15,10 +15,6 @@
     </div>
 
     <div class="container">
-        <div class="header">
-            <h1>財布の現金</h1>
-            <button id="addButton" class="action-button"></button>
-        </div>
 
         <div class="stats-container">
             <div class="balance-card">
@@ -61,14 +57,16 @@
                 </thead>
                 <tbody id="transactionTable"></tbody>
             </table>
+
         </div>
+        <button id="addButton" class="action-button"></button>
+
     </div>
 
     <!-- 追加モーダル -->
     <div id="addModal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
-            <h2>新規取引の追加</h2>
             <div class="input-area">
                 <input type="date" id="date" required />
                 <div class="amount-input-container">
@@ -91,7 +89,6 @@
     <div id="editModal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
-            <h2>取引の編集</h2>
             <div class="input-area">
                 <input type="date" id="editDate" required />
                 <div class="amount-input-container">
@@ -644,6 +641,8 @@
         max-width: 100%;
         padding: 10px;
         margin: 0 auto;
+        position: relative;
+        /* 追加: ボタンの絶対配置の基準に */
     }
 
     .header {
@@ -1033,6 +1032,14 @@
             width: 60%;
             margin: 10% auto;
         }
+    }
+
+    #addButton {
+        position: sticky;
+        float: right;
+        right: 20px;
+        bottom: 20px;
+        z-index: 10;
     }
 </style>
 
