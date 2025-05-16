@@ -9,6 +9,8 @@
 </head>
 
 <body>
+    <a href="https://github.com/buzomo/cash/edit/main/index.html"
+        style="text-decoration:none;position:absolute;right:13px;bottom:0;color:orange">edit now</a>
     <div id="token-overlay" style="display: none;">
         <input type="password" id="token-input" placeholder="GitHub Token を入力してください" />
         <button onclick="submitToken()">保存してリロード</button>
@@ -210,23 +212,23 @@
         // データ読み込み
         async function loadTransactions() {
             try {
-            const response = await fetch(
-                'https://api.github.com/repos/buzomo/cash-data/contents/transactions.json',
-                {
-                headers: {
-                    'Authorization': `token ${getLocalStorageToken('gh_token')}`
-                }
-                }
-            );
-            if (!response.ok) throw new Error('Failed to fetch transactions');
-            const data = await response.json();
-            const content = JSON.parse(decodeURIComponent(escape(atob(data.content))));
-            transactions = content;
-            updateTable();
-            updateStats();
-            updateChart();
+                const response = await fetch(
+                    'https://api.github.com/repos/buzomo/cash-data/contents/transactions.json',
+                    {
+                        headers: {
+                            'Authorization': `token ${getLocalStorageToken('gh_token')}`
+                        }
+                    }
+                );
+                if (!response.ok) throw new Error('Failed to fetch transactions');
+                const data = await response.json();
+                const content = JSON.parse(decodeURIComponent(escape(atob(data.content))));
+                transactions = content;
+                updateTable();
+                updateStats();
+                updateChart();
             } catch (error) {
-            console.error('Error loading transactions:', error);
+                console.error('Error loading transactions:', error);
             }
         }
 
@@ -606,12 +608,14 @@
         --card: #fff;
         --shadow: rgba(0, 0, 0, 0.05);
     }
-    a{
+
+    a {
         text-decoration: none;
         color: #333;
     }
-    .footer{
-        top:0;
+
+    .footer {
+        top: 0;
         right: 20px;
         height: 20px;
         position: fixed;
